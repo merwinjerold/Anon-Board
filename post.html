@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Post — AnonBoard</title>
+  <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("ab_theme")||"dark");</script>
+  <link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+:root{--bg:#07080f;--glass:rgba(255,255,255,.045);--gb:rgba(255,255,255,.09);--pink:#f72585;--violet:#7209b7;--cyan:#4cc9f0;--green:#06ffa5;--orange:#ff6b35;--yellow:#ffd60a;--text:#f0f0ff;--dim:#8888aa;--muted:#44445a;--cbg:rgba(255,255,255,.045);--cbr:rgba(255,255,255,.09);--nav:rgba(7,8,15,.82);--r:18px;--rlg:24px;--rsm:10px;}
+[data-theme="light"]{--bg:#f0f2f8;--glass:rgba(255,255,255,.75);--gb:rgba(0,0,0,.1);--text:#0a0a1a;--dim:#555577;--muted:#9999bb;--cbg:rgba(255,255,255,.85);--cbr:rgba(0,0,0,.1);--nav:rgba(240,242,248,.88);}
+[data-theme="light"] .ab{opacity:.07!important;}[data-theme="light"] .toast{background:rgba(255,255,255,.95)!important;color:var(--text);}[data-theme="light"] .pfc{color:rgba(10,10,26,.85);}[data-theme="light"] .ctxt{color:rgba(10,10,26,.75);}[data-theme="light"] textarea.fi{background:rgba(0,0,0,.04);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background .25s,color .25s;}
+.aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+.ab{position:absolute;border-radius:50%;filter:blur(90px);opacity:.16;animation:drift 20s ease-in-out infinite alternate;}
+.ab:nth-child(1){width:700px;height:700px;background:var(--pink);top:-250px;left:-150px;animation-duration:22s;}
+.ab:nth-child(2){width:600px;height:600px;background:var(--cyan);top:50px;right:-200px;animation-duration:18s;animation-delay:-6s;}
+.ab:nth-child(3){width:500px;height:500px;background:var(--violet);bottom:0;left:25%;animation-duration:25s;animation-delay:-12s;}
+.ab:nth-child(4){width:350px;height:350px;background:var(--green);bottom:-100px;right:15%;animation-duration:15s;animation-delay:-4s;}
+@keyframes drift{0%{transform:translate(0,0)scale(1);}33%{transform:translate(40px,-30px)scale(1.06);}66%{transform:translate(-25px,35px)scale(.96);}100%{transform:translate(15px,15px)scale(1.04);}}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:1;}
+nav{position:sticky;top:0;z-index:200;height:66px;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;background:var(--nav);backdrop-filter:blur(28px)saturate(180%);border-bottom:1px solid var(--gb);transition:background .25s;}
+.logo{font-weight:800;font-size:1.3rem;text-decoration:none;background:linear-gradient(135deg,var(--pink),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nlinks{display:flex;gap:4px;}.nl{color:var(--dim);text-decoration:none;font-size:.875rem;font-weight:600;padding:7px 16px;border-radius:999px;transition:all .2s;border:1px solid transparent;}.nl:hover,.nl.on{color:var(--text);background:var(--glass);border-color:var(--gb);}
+.nav-r{display:flex;align-items:center;gap:8px;}.nalias{font-size:.76rem;font-weight:600;padding:5px 14px;border-radius:999px;background:var(--glass);border:1px solid var(--gb);color:var(--dim);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tbtn{background:var(--glass);border:1px solid var(--gb);color:var(--dim);width:36px;height:36px;border-radius:999px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}.tbtn:hover{color:var(--text);transform:scale(1.1);}
+.wrap{max-width:740px;margin:0 auto;padding:2.5rem 1.5rem 5rem;position:relative;z-index:10;}
+.bk{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:.875rem;margin-bottom:1.5rem;transition:color .2s;}.bk:hover{color:var(--cyan);}
+.gcard{background:var(--cbg);border:1px solid var(--cbr);border-radius:var(--rlg);padding:1.75rem;backdrop-filter:blur(20px);margin-bottom:2rem;}
+.ph{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:.85rem;}
+.ac{font-size:.76rem;font-weight:700;padding:3px 11px;border-radius:999px;background:rgba(247,37,133,.15);color:var(--pink);border:1px solid rgba(247,37,133,.25);}
+.tc{font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:999px;letter-spacing:.05em;text-transform:uppercase;}
+.tc.Confession{background:rgba(247,37,133,.12);color:var(--pink);border:1px solid rgba(247,37,133,.2);}.tc.Question{background:rgba(76,201,240,.12);color:var(--cyan);border:1px solid rgba(76,201,240,.2);}.tc.Opinion{background:rgba(255,214,10,.1);color:var(--yellow);border:1px solid rgba(255,214,10,.2);}.tc.Rant{background:rgba(255,107,53,.12);color:var(--orange);border:1px solid rgba(255,107,53,.2);}.tc.Meme{background:rgba(6,255,165,.1);color:var(--green);border:1px solid rgba(6,255,165,.2);}.tc.Poll{background:rgba(114,9,183,.15);color:#c77dff;border:1px solid rgba(114,9,183,.3);}
+.pt{margin-left:auto;font-size:.72rem;color:var(--muted);}
+.pfc{font-size:1.05rem;line-height:1.82;color:rgba(240,240,255,.9);word-break:break-word;margin:1rem 0;}
+
+/* ── POLL ── */
+.poll-box{margin:1rem 0;}
+.po{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.po.clickable{cursor:pointer;}.po.clickable:hover .pbw{border-color:rgba(124,106,255,.5);}
+.pbw{flex:1;background:var(--gb);border-radius:999px;height:38px;position:relative;overflow:hidden;border:1px solid transparent;transition:border-color .2s;}
+.pbar{position:absolute;left:0;top:0;height:100%;border-radius:999px;transition:width .6s cubic-bezier(.34,1.56,.64,1);background:linear-gradient(90deg,var(--violet),var(--pink));}
+.poll-voted .pbar{background:linear-gradient(90deg,var(--cyan),var(--green));}
+.pbl{position:relative;z-index:1;padding:0 14px;font-size:.88rem;font-weight:600;line-height:38px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ppct{font-size:.82rem;font-weight:700;color:var(--dim);min-width:42px;text-align:right;flex-shrink:0;}
+.ptotal{font-size:.75rem;color:var(--muted);margin-top:4px;}
+
+.pf{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:1rem;border-top:1px solid var(--gb);}
+.vb{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:999px;border:1px solid var(--gb);background:var(--glass);color:var(--dim);font-size:.8rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;}.vb:hover{border-color:rgba(255,255,255,.2);color:var(--text);transform:scale(1.06);}
+.vb.up{background:rgba(6,255,165,.12);border-color:rgba(6,255,165,.4);color:var(--green);}.vb.dn{background:rgba(247,37,133,.1);border-color:rgba(247,37,133,.3);color:var(--pink);}
+.rbtn{margin-left:auto;background:none;border:none;color:var(--muted);font-size:.75rem;cursor:pointer;padding:4px 9px;border-radius:7px;transition:all .2s;font-family:inherit;}.rbtn:hover{color:var(--pink);background:rgba(247,37,133,.08);}
+.ch{font-weight:700;font-size:1rem;color:var(--dim);margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
+.cc{background:rgba(255,255,255,.03);border:1px solid var(--cbr);border-radius:14px;padding:.9rem 1.1rem;margin-bottom:.7rem;animation:cin .3s ease forwards;opacity:0;}
+[data-theme="light"] .cc{background:rgba(0,0,0,.03);}
+@keyframes cin{to{opacity:1;}}
+.ca{font-size:.76rem;font-weight:700;color:var(--cyan);margin-right:6px;}.ca.me{color:var(--pink);}
+.cts{font-size:.7rem;color:var(--muted);}
+.ctxt{font-size:.88rem;color:rgba(240,240,255,.82);line-height:1.65;margin-top:.35rem;}
+.cirow{display:flex;gap:10px;align-items:flex-end;margin-top:1.1rem;}.cirow textarea{flex:1;min-height:64px;max-height:120px;}
+textarea.fi{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--gb);border-radius:var(--rsm);color:var(--text);font-family:inherit;font-size:.95rem;padding:.8rem 1rem;outline:none;transition:border-color .2s,box-shadow .2s;resize:vertical;}
+textarea.fi:focus{border-color:rgba(76,201,240,.5);box-shadow:0 0 0 3px rgba(76,201,240,.1);}textarea.fi::placeholder{color:var(--muted);}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:.72rem 1.6rem;border-radius:12px;font-family:inherit;font-weight:700;font-size:.88rem;cursor:pointer;border:none;text-decoration:none;transition:all .22s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;}
+.btnp{background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff;box-shadow:0 4px 20px rgba(247,37,133,.3);}.btnp:hover{transform:translateY(-2px)scale(1.02);}.btnp:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none;}
+.ldr{display:flex;align-items:center;justify-content:center;padding:5rem 2rem;}
+.spin{width:36px;height:36px;border:3px solid var(--gb);border-top-color:var(--pink);border-right-color:var(--cyan);border-radius:50%;animation:sp .8s linear infinite;}@keyframes sp{to{transform:rotate(360deg);}}
+.empty{text-align:center;padding:3rem;}.empty h3{font-weight:700;color:var(--dim);margin-bottom:.3rem;}.empty p{color:var(--muted);font-size:.88rem;}
+.tcon{position:fixed;bottom:1.75rem;right:1.75rem;z-index:999;display:flex;flex-direction:column;gap:8px;pointer-events:none;}
+.toast{display:flex;align-items:center;gap:10px;padding:11px 17px;border-radius:12px;font-size:.875rem;font-weight:500;backdrop-filter:blur(20px);border:1px solid var(--gb);background:rgba(10,11,20,.9);color:var(--text);transform:translateX(130px);opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);pointer-events:all;}.toast.show{transform:translateX(0);opacity:1;}
+.ts{border-left:3px solid var(--green);}.te{border-left:3px solid var(--pink);}.ti{border-left:3px solid var(--cyan);}
+.ticon{font-size:.9rem;}.ts .ticon{color:var(--green);}.te .ticon{color:var(--pink);}.ti .ticon{color:var(--cyan);}
+@media(max-width:640px){nav{padding:0 1rem;}.nalias{display:none;}.wrap{padding:1.5rem 1rem 3rem;}.cirow{flex-direction:column;}.cirow .btn{width:100%;}}
+  </style>
+</head>
+<body>
+<div class="aurora"><div class="ab"></div><div class="ab"></div><div class="ab"></div><div class="ab"></div></div>
+<nav>
+  <a class="logo" href="../index.html">🕶️ AnonBoard</a>
+  <div class="nlinks"><a class="nl" href="../index.html">Feed</a><a class="nl" href="trending.html">🔥 Trending</a><a class="nl" href="create.html">✦ Post</a></div>
+  <div class="nav-r"><button class="tbtn" id="tbtn">🌙</button><span class="nalias" id="nalias">Loading…</span></div>
+</nav>
+<div class="wrap">
+  <a class="bk" href="../index.html">← Back to Feed</a>
+  <div id="post-area"><div class="ldr"><div class="spin"></div></div></div>
+  <div id="comments-section" style="display:none">
+    <div class="ch">💬 <span id="clabel">Comments</span></div>
+    <div id="clist"></div>
+    <div class="cirow">
+      <textarea class="fi" id="cinput" placeholder="Add a comment anonymously… (Ctrl+Enter to send)" maxlength="500"></textarea>
+      <button class="btn btnp" id="cbtn">Send</button>
+    </div>
+  </div>
+</div>
+<div class="tcon" id="tc"></div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({apiKey:"AIzaSyAClamkJY1f7JB5Y0RlRe4rHT71a2T9kGA",authDomain:"anonymouswebsite.firebaseapp.com",projectId:"anonymouswebsite",storageBucket:"anonymouswebsite.firebasestorage.app",messagingSenderId:"114951669112",appId:"1:114951669112:web:a3891682821870e138f48d"});
+const db=firebase.firestore();
+const ADJ=["Silent","Mystic","Wandering","Hidden","Phantom","Shadow","Cosmic","Lunar","Electric","Frozen","Ancient","Neon","Crimson","Golden","Velvet","Blazing","Drifting","Spectral","Hollow","Radiant"];
+const ANI=["Panda 🐼","Fox 🦊","Wolf 🐺","Raven 🐦","Tiger 🐯","Owl 🦉","Phoenix 🔥","Dolphin 🐬","Jaguar 🐆","Hawk 🦅","Lynx 🐱","Kraken 🦑","Moth 🦋","Falcon 🦅","Cobra 🐍","Mantis 🦗","Bison 🦬","Mango 🥭","Viper 🐍","Coyote 🐺"];
+function getAlias(){let a=sessionStorage.getItem("ab_alias");if(!a){a=ADJ[Math.floor(Math.random()*ADJ.length)]+" "+ANI[Math.floor(Math.random()*ANI.length)];sessionStorage.setItem("ab_alias",a);}return a;}
+function getSid(){let s=sessionStorage.getItem("ab_sid");if(!s){s="s"+Math.random().toString(36).substr(2,10);sessionStorage.setItem("ab_sid",s);}return s;}
+function timeAgo(ts){if(!ts)return"just now";const d=Date.now()-ts,m=Math.floor(d/60000),h=Math.floor(d/3600000),dy=Math.floor(d/86400000);if(m<1)return"just now";if(m<60)return m+"m ago";if(h<24)return h+"h ago";return dy+"d ago";}
+function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g,"<br>");}
+function toast(msg,type){const c=document.getElementById("tc"),t=document.createElement("div"),icons={s:"✓",e:"✕",i:"●"};t.className="toast t"+(type||"i");t.innerHTML='<span class="ticon">'+(icons[type||"i"]||"●")+'</span><span>'+msg+'</span>';c.appendChild(t);requestAnimationFrame(()=>t.classList.add("show"));setTimeout(()=>{t.classList.remove("show");setTimeout(()=>t.remove(),400);},3200);}
+
+const alias=getAlias(),sid=getSid();
+document.getElementById("nalias").textContent=alias;
+const tbtn=document.getElementById("tbtn");
+tbtn.textContent=document.documentElement.getAttribute("data-theme")==="dark"?"🌙":"☀️";
+tbtn.addEventListener("click",()=>{const n=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",n);localStorage.setItem("ab_theme",n);tbtn.textContent=n==="dark"?"🌙":"☀️";});
+
+const CC=30000;
+function ccRem(){const l=parseInt(localStorage.getItem("ab_last_comment")||"0"),r=CC-(Date.now()-l);return r>0?r:0;}
+function ccUI(){const btn=document.getElementById("cbtn"),iv=setInterval(()=>{const r=ccRem();if(r<=0){clearInterval(iv);btn.disabled=false;btn.textContent="Send";}else{btn.disabled=true;btn.textContent="⏳ "+Math.ceil(r/1000)+"s";}},500);}
+window.addEventListener("load",()=>{if(ccRem()>0)ccUI();});
+
+const postId=new URLSearchParams(location.search).get("id");
+if(!postId)window.location.href="../index.html";
+const postRef=db.collection("posts").doc(postId);
+
+// ── FIXED: use onSnapshot so poll updates in realtime without manual re-render ──
+postRef.onSnapshot(snap=>{
+  if(!snap.exists){
+    document.getElementById("post-area").innerHTML='<div class="empty"><h3>Post not found</h3><p>It may have been deleted or expired.</p></div>';
+    return;
+  }
+  renderPost({id:snap.id,...snap.data()});
+  document.getElementById("comments-section").style.display="block";
+});
+
+// ── FIXED renderPost — always shows poll options + percentages ──
+function renderPost(p){
+  const myUp=(p.upvotedBy||[]).includes(sid),myDown=(p.downvotedBy||[]).includes(sid);
+  const isPoll=p.tag==="Poll"&&Array.isArray(p.pollOptions);
+  const total=isPoll?p.pollOptions.reduce((a,o)=>a+((o&&o.votes)||0),0):0;
+  const voted=isPoll&&(p.pollVotedBy||[]).includes(sid);
+
+  const pollHTML=isPoll?`
+    <div class="poll-box${voted?" poll-voted":""}">
+      ${p.pollOptions.filter(Boolean).map((o,i)=>{
+        const pct=total>0?Math.round(((o.votes||0)/total)*100):0;
+        const clickAttrs=voted?"":`data-pv="${p.id}" data-opt="${i}"`;
+        return`<div class="po${voted?"":" clickable"}" ${clickAttrs}>
+          <div class="pbw">
+            <div class="pbar" style="width:${pct}%"></div>
+            <span class="pbl">${esc(o.text||"")}</span>
+          </div>
+          <span class="ppct">${pct}%</span>
+        </div>`;
+      }).join("")}
+      <div class="ptotal">${total} vote${total!==1?"s":""} ${voted?"&nbsp;·&nbsp;<span style='color:var(--green);font-weight:700'>✓ You voted</span>":"· <span style='color:var(--dim)'>tap an option to vote</span>"}</div>
+    </div>`:"";
+
+  // Preserve scroll position when re-rendering after vote
+  const scrollY=window.scrollY;
+  document.getElementById("post-area").innerHTML=`
+    <div class="gcard">
+      <div class="ph"><span class="ac">${esc(p.alias)}</span><span class="tc ${p.tag||""}">${p.tag||"General"}</span><span class="pt">${timeAgo(p.createdAt)}</span></div>
+      <div class="pfc">${esc(p.content)}</div>
+      ${pollHTML}
+      <div class="pf">
+        <button class="vb ${myUp?"up":""}" id="ubtn">▲ <span id="uc">${p.upvotes||0}</span></button>
+        <button class="vb ${myDown?"dn":""}" id="dbtn">▼ <span id="dc">${p.downvotes||0}</span></button>
+        <button class="rbtn" id="repbtn">⚑ Report</button>
+      </div>
+    </div>`;
+  window.scrollTo(0,scrollY);
+
+  document.getElementById("ubtn").addEventListener("click",()=>handleVote("up"));
+  document.getElementById("dbtn").addEventListener("click",()=>handleVote("down"));
+  document.getElementById("repbtn").addEventListener("click",async()=>{if(!confirm("Report this post?"))return;await postRef.update({reports:firebase.firestore.FieldValue.increment(1)});toast("Reported. Thank you.","s");});
+
+  // Poll vote listener — only attach when user hasn't voted
+  if(isPoll&&!voted){
+    document.getElementById("post-area").querySelectorAll(".po.clickable").forEach(el=>{
+      el.addEventListener("click",async()=>{
+        try{
+          const oi=parseInt(el.dataset.opt);
+          // Read fresh to get latest counts before updating
+          const snap=await postRef.get();
+          const fresh=snap.data();
+          // Check again in case they voted from another tab
+          if((fresh.pollVotedBy||[]).includes(sid)){toast("You already voted!","e");return;}
+          const opts=[...(fresh.pollOptions||[])];
+          if(!opts[oi])return;
+          opts[oi]={...opts[oi],votes:(opts[oi].votes||0)+1};
+          await postRef.update({
+            pollOptions:opts,
+            pollVotedBy:firebase.firestore.FieldValue.arrayUnion(sid)
+          });
+          toast("Vote cast! 📊","s");
+          // onSnapshot will automatically re-render with new data
+        }catch(err){toast("Vote failed: "+err.message,"e");}
+      });
+    });
+  }
+}
+
+async function handleVote(type){
+  const FV=firebase.firestore.FieldValue,snap=await postRef.get(),d=snap.data(),upBy=d.upvotedBy||[],downBy=d.downvotedBy||[];
+  if(type==="up"){if(upBy.includes(sid))await postRef.update({upvotes:FV.increment(-1),upvotedBy:FV.arrayRemove(sid),score:FV.increment(-1)});else{const wd=downBy.includes(sid);await postRef.update({upvotes:FV.increment(1),upvotedBy:FV.arrayUnion(sid),...(wd&&{downvotes:FV.increment(-1),downvotedBy:FV.arrayRemove(sid)}),score:FV.increment(wd?2:1)});}}
+  else{if(downBy.includes(sid))await postRef.update({downvotes:FV.increment(-1),downvotedBy:FV.arrayRemove(sid),score:FV.increment(1)});else{const wu=upBy.includes(sid);await postRef.update({downvotes:FV.increment(1),downvotedBy:FV.arrayUnion(sid),...(wu&&{upvotes:FV.increment(-1),upvotedBy:FV.arrayRemove(sid)}),score:FV.increment(wu?-2:-1)});}}
+}
+
+// Load comments once (separate from post snapshot)
+let commentsLoaded=false;
+function loadComments(){
+  if(commentsLoaded)return;commentsLoaded=true;
+  db.collection("posts").doc(postId).collection("comments").orderBy("createdAt","asc").onSnapshot(snap=>{
+    const comments=snap.docs.map(d=>({id:d.id,...d.data()}));
+    document.getElementById("clabel").textContent=`Comments (${comments.length})`;
+    const list=document.getElementById("clist");
+    if(!comments.length){list.innerHTML='<div class="empty"><h3>No comments yet</h3><p>Be the first to comment 👇</p></div>';return;}
+    list.innerHTML=comments.map((c,i)=>`<div class="cc" style="animation-delay:${i*.04}s"><div><span class="ca ${c.sessionId===sid?"me":""}">${c.sessionId===sid?"(You) ":""}${esc(c.alias)}</span><span class="cts">${timeAgo(c.createdAt)}</span></div><div class="ctxt">${esc(c.content)}</div></div>`).join("");
+  });
+}
+// Start comments once section is shown (triggered by first onSnapshot render)
+const commentsObserver=new MutationObserver(()=>{if(document.getElementById("comments-section").style.display!=="none"){loadComments();commentsObserver.disconnect();}});
+commentsObserver.observe(document.getElementById("comments-section"),{attributes:true,attributeFilter:["style"]});
+
+document.getElementById("cbtn").addEventListener("click",sendComment);
+document.getElementById("cinput").addEventListener("keydown",e=>{if(e.key==="Enter"&&e.ctrlKey)sendComment();});
+
+async function sendComment(){
+  const input=document.getElementById("cinput"),content=input.value.trim();
+  if(!content){toast("Comment cannot be empty!","e");return;}
+  const rem=ccRem();if(rem>0){toast("Wait "+Math.ceil(rem/1000)+"s before commenting again","e");ccUI();return;}
+  const btn=document.getElementById("cbtn");btn.disabled=true;btn.textContent="…";
+  try{
+    await db.collection("posts").doc(postId).collection("comments").add({content,alias,sessionId:sid,createdAt:Date.now()});
+    await postRef.update({commentCount:firebase.firestore.FieldValue.increment(1)});
+    localStorage.setItem("ab_last_comment",Date.now().toString());
+    input.value="";toast("Comment posted!","s");
+  }catch(err){toast("Failed: "+err.message,"e");}
+  finally{btn.disabled=false;btn.textContent="Send";}
+}
+if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});
+</script>
+</body>
+</html>

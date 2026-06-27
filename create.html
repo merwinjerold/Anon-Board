@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Post — AnonBoard</title>
+  <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("ab_theme")||"dark");</script>
+  <link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+:root{--bg:#07080f;--glass:rgba(255,255,255,.045);--gb:rgba(255,255,255,.09);--pink:#f72585;--violet:#7209b7;--cyan:#4cc9f0;--green:#06ffa5;--orange:#ff6b35;--yellow:#ffd60a;--text:#f0f0ff;--dim:#8888aa;--muted:#44445a;--cbg:rgba(255,255,255,.045);--cbr:rgba(255,255,255,.09);--nav:rgba(7,8,15,.82);--r:18px;--rlg:24px;--rsm:10px;}
+[data-theme="light"]{--bg:#f0f2f8;--glass:rgba(255,255,255,.75);--gb:rgba(0,0,0,.1);--text:#0a0a1a;--dim:#555577;--muted:#9999bb;--cbg:rgba(255,255,255,.85);--cbr:rgba(0,0,0,.1);--nav:rgba(240,242,248,.88);}
+[data-theme="light"] .ab{opacity:.07!important;}[data-theme="light"] .toast{background:rgba(255,255,255,.95)!important;color:var(--text);}
+[data-theme="light"] textarea.fi,[data-theme="light"] input.fi{background:rgba(0,0,0,.04);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background .25s,color .25s;}
+.aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+.ab{position:absolute;border-radius:50%;filter:blur(90px);opacity:.16;animation:drift 20s ease-in-out infinite alternate;}
+.ab:nth-child(1){width:700px;height:700px;background:var(--pink);top:-250px;left:-150px;animation-duration:22s;}
+.ab:nth-child(2){width:600px;height:600px;background:var(--cyan);top:50px;right:-200px;animation-duration:18s;animation-delay:-6s;}
+.ab:nth-child(3){width:500px;height:500px;background:var(--violet);bottom:0;left:25%;animation-duration:25s;animation-delay:-12s;}
+.ab:nth-child(4){width:350px;height:350px;background:var(--green);bottom:-100px;right:15%;animation-duration:15s;animation-delay:-4s;}
+@keyframes drift{0%{transform:translate(0,0)scale(1);}33%{transform:translate(40px,-30px)scale(1.06);}66%{transform:translate(-25px,35px)scale(.96);}100%{transform:translate(15px,15px)scale(1.04);}}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:1;}
+nav{position:sticky;top:0;z-index:200;height:66px;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;background:var(--nav);backdrop-filter:blur(28px)saturate(180%);border-bottom:1px solid var(--gb);transition:background .25s;}
+.logo{font-weight:800;font-size:1.3rem;text-decoration:none;background:linear-gradient(135deg,var(--pink),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nlinks{display:flex;gap:4px;}.nl{color:var(--dim);text-decoration:none;font-size:.875rem;font-weight:600;padding:7px 16px;border-radius:999px;transition:all .2s;border:1px solid transparent;}.nl:hover,.nl.on{color:var(--text);background:var(--glass);border-color:var(--gb);}
+.nav-r{display:flex;align-items:center;gap:8px;}.nalias{font-size:.76rem;font-weight:600;padding:5px 14px;border-radius:999px;background:var(--glass);border:1px solid var(--gb);color:var(--dim);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tbtn{background:var(--glass);border:1px solid var(--gb);color:var(--dim);width:36px;height:36px;border-radius:999px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}.tbtn:hover{color:var(--text);border-color:rgba(255,255,255,.2);transform:scale(1.1);}
+.wrap{max-width:740px;margin:0 auto;padding:2.5rem 1.5rem 5rem;position:relative;z-index:10;}
+.hero{margin-bottom:2rem;}.hero h1{font-weight:800;font-size:2.1rem;letter-spacing:-.8px;line-height:1.15;margin-bottom:.3rem;}
+.gt{background:linear-gradient(135deg,var(--pink) 0%,var(--cyan) 55%,var(--green) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero p{color:var(--dim);font-size:.9rem;}
+.bk{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:.875rem;margin-bottom:1.5rem;transition:color .2s;}.bk:hover{color:var(--cyan);}
+.fwrap{background:var(--cbg);border:1px solid var(--cbr);border-radius:var(--rlg);padding:2rem;backdrop-filter:blur(20px);}
+.ftitle{font-weight:700;font-size:1.1rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:10px;}
+.flabel{display:block;font-size:.73rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.45rem;}
+.fgroup{margin-bottom:1.25rem;}
+textarea.fi,input.fi{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--gb);border-radius:var(--rsm);color:var(--text);font-family:inherit;font-size:.95rem;padding:.8rem 1rem;outline:none;transition:border-color .2s,box-shadow .2s;resize:vertical;}
+textarea.fi{min-height:130px;}textarea.fi:focus,input.fi:focus{border-color:rgba(76,201,240,.5);box-shadow:0 0 0 3px rgba(76,201,240,.1);}textarea.fi::placeholder,input.fi::placeholder{color:var(--muted);}
+.cbar{display:flex;justify-content:flex-end;margin-top:.25rem;font-size:.73rem;color:var(--muted);}.cbar.w{color:var(--orange);}.cbar.d{color:var(--pink);}
+.tpills{display:flex;gap:8px;flex-wrap:wrap;}
+.tpb{padding:7px 15px;border-radius:999px;border:1px solid var(--gb);background:var(--glass);color:var(--dim);font-size:.82rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;}.tpb:hover{transform:translateY(-1px);color:var(--text);}
+.tpb.sC{background:rgba(247,37,133,.2);border-color:var(--pink);color:var(--pink);}
+.tpb.sQ{background:rgba(76,201,240,.2);border-color:var(--cyan);color:var(--cyan);}
+.tpb.sO{background:rgba(255,214,10,.15);border-color:var(--yellow);color:var(--yellow);}
+.tpb.sR{background:rgba(255,107,53,.2);border-color:var(--orange);color:var(--orange);}
+.tpb.sM{background:rgba(6,255,165,.15);border-color:var(--green);color:var(--green);}
+.tpb.sP{background:rgba(114,9,183,.2);border-color:#c77dff;color:#c77dff;}
+.epills{display:flex;gap:8px;flex-wrap:wrap;}.epb{padding:7px 15px;border-radius:999px;border:1px solid var(--gb);background:var(--glass);color:var(--dim);font-size:.82rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;}.epb:hover{color:var(--text);border-color:rgba(255,255,255,.2);}.epb.on{background:rgba(76,201,240,.15);border-color:var(--cyan);color:var(--cyan);}
+/* Poll builder */
+.poll-builder{display:none;}.poll-builder.show{display:block;}
+.por{display:flex;gap:8px;align-items:center;margin-bottom:8px;}.por input.fi{flex:1;min-height:unset;resize:none;}
+.pdel{background:none;border:1px solid var(--gb);color:var(--muted);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}.pdel:hover{color:var(--pink);border-color:var(--pink);}
+.padd{background:none;border:1px dashed var(--gb);color:var(--dim);padding:7px 14px;border-radius:8px;cursor:pointer;font-size:.82rem;font-weight:600;font-family:inherit;transition:all .2s;width:100%;margin-top:4px;}.padd:hover{border-color:var(--cyan);color:var(--cyan);}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:.72rem 1.6rem;border-radius:12px;font-family:inherit;font-weight:700;font-size:.88rem;cursor:pointer;border:none;text-decoration:none;transition:all .22s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;}
+.btnp{background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff;box-shadow:0 4px 20px rgba(247,37,133,.3);}.btnp:hover{transform:translateY(-2px)scale(1.02);box-shadow:0 8px 30px rgba(247,37,133,.4);}.btnp:active{transform:scale(.98);}.btnp:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none;}
+.btng{background:var(--glass);border:1px solid var(--gb);color:var(--dim);}.btng:hover{color:var(--text);border-color:rgba(255,255,255,.2);transform:translateY(-1px);}
+.brow{display:flex;gap:10px;justify-content:flex-end;margin-top:1.75rem;flex-wrap:wrap;}
+.tcon{position:fixed;bottom:1.75rem;right:1.75rem;z-index:999;display:flex;flex-direction:column;gap:8px;pointer-events:none;}
+.toast{display:flex;align-items:center;gap:10px;padding:11px 17px;border-radius:12px;font-size:.875rem;font-weight:500;backdrop-filter:blur(20px);border:1px solid var(--gb);background:rgba(10,11,20,.9);color:var(--text);transform:translateX(130px);opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);pointer-events:all;}.toast.show{transform:translateX(0);opacity:1;}
+.ts{border-left:3px solid var(--green);}.te{border-left:3px solid var(--pink);}.ti{border-left:3px solid var(--cyan);}
+.ticon{font-size:.9rem;}.ts .ticon{color:var(--green);}.te .ticon{color:var(--pink);}.ti .ticon{color:var(--cyan);}
+@media(max-width:640px){nav{padding:0 1rem;}.nalias{display:none;}.wrap{padding:1.5rem 1rem 3rem;}.fwrap{padding:1.25rem;}.brow{flex-direction:column;}.brow .btn{width:100%;}}
+  </style>
+</head>
+<body>
+<div class="aurora"><div class="ab"></div><div class="ab"></div><div class="ab"></div><div class="ab"></div></div>
+<nav>
+  <a class="logo" href="../index.html">🕶️ AnonBoard</a>
+  <div class="nlinks"><a class="nl" href="../index.html">Feed</a><a class="nl" href="trending.html">🔥 Trending</a><a class="nl on" href="create.html">✦ Post</a></div>
+  <div class="nav-r"><button class="tbtn" id="tbtn">🌙</button><span class="nalias" id="nalias">Loading…</span></div>
+</nav>
+
+<div class="wrap">
+  <a class="bk" href="../index.html">← Back to Feed</a>
+  <div class="hero">
+    <h1>Create a <span class="gt">Post</span></h1>
+    <p>Posting as <strong id="adisp" style="color:var(--pink)">…</strong></p>
+  </div>
+  <div class="fwrap">
+    <div class="ftitle"><span style="font-size:1.3rem">✦</span> What's on your mind?</div>
+
+    <div class="fgroup">
+      <label class="flabel">Category</label>
+      <div class="tpills">
+        <button class="tpb sC" data-tag="Confession" data-key="C">💬 Confession</button>
+        <button class="tpb" data-tag="Question" data-key="Q">❓ Question</button>
+        <button class="tpb" data-tag="Opinion" data-key="O">💡 Opinion</button>
+        <button class="tpb" data-tag="Rant" data-key="R">😤 Rant</button>
+        <button class="tpb" data-tag="Meme" data-key="M">😂 Meme</button>
+        <button class="tpb" data-tag="Poll" data-key="P">📊 Poll</button>
+      </div>
+    </div>
+
+    <div class="fgroup">
+      <label class="flabel">Your Message</label>
+      <textarea class="fi" id="content" maxlength="1000" placeholder="Share anything freely — confess, rant, ask, or just vibe. This is a safe space."></textarea>
+      <div class="cbar" id="cbar">0 / 1000</div>
+    </div>
+
+    <div class="fgroup poll-builder" id="poll-builder">
+      <label class="flabel">Poll Options (2–4)</label>
+      <div id="poll-opts">
+        <div class="por"><input class="fi" type="text" placeholder="Option 1" maxlength="80"/><button class="pdel" style="visibility:hidden">✕</button></div>
+        <div class="por"><input class="fi" type="text" placeholder="Option 2" maxlength="80"/><button class="pdel" style="visibility:hidden">✕</button></div>
+      </div>
+      <button class="padd" id="padd">+ Add Option</button>
+    </div>
+
+    <div class="fgroup">
+      <label class="flabel">Auto-Delete</label>
+      <div class="epills">
+        <button class="epb on" data-h="0">Never</button>
+        <button class="epb" data-h="24">24 hours</button>
+        <button class="epb" data-h="168">7 days</button>
+      </div>
+    </div>
+
+    <div class="brow">
+      <a class="btn btng" href="../index.html">Cancel</a>
+      <button class="btn btnp" id="subbtn">🕶️ Post Anonymously</button>
+    </div>
+  </div>
+</div>
+<div class="tcon" id="tc"></div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({apiKey:"AIzaSyAClamkJY1f7JB5Y0RlRe4rHT71a2T9kGA",authDomain:"anonymouswebsite.firebaseapp.com",projectId:"anonymouswebsite",storageBucket:"anonymouswebsite.firebasestorage.app",messagingSenderId:"114951669112",appId:"1:114951669112:web:a3891682821870e138f48d"});
+const db=firebase.firestore();
+const ADJ=["Silent","Mystic","Wandering","Hidden","Phantom","Shadow","Cosmic","Lunar","Electric","Frozen","Ancient","Neon","Crimson","Golden","Velvet","Blazing","Drifting","Spectral","Hollow","Radiant"];
+const ANI=["Panda 🐼","Fox 🦊","Wolf 🐺","Raven 🐦","Tiger 🐯","Owl 🦉","Phoenix 🔥","Dolphin 🐬","Jaguar 🐆","Hawk 🦅","Lynx 🐱","Kraken 🦑","Moth 🦋","Falcon 🦅","Cobra 🐍","Mantis 🦗","Bison 🦬","Mango 🥭","Viper 🐍","Coyote 🐺"];
+function getAlias(){let a=sessionStorage.getItem("ab_alias");if(!a){a=ADJ[Math.floor(Math.random()*ADJ.length)]+" "+ANI[Math.floor(Math.random()*ANI.length)];sessionStorage.setItem("ab_alias",a);}return a;}
+function getSid(){let s=sessionStorage.getItem("ab_sid");if(!s){s="s"+Math.random().toString(36).substr(2,10);sessionStorage.setItem("ab_sid",s);}return s;}
+function toast(msg,type){const c=document.getElementById("tc"),t=document.createElement("div"),icons={s:"✓",e:"✕",i:"●"};t.className="toast t"+(type||"i");t.innerHTML='<span class="ticon">'+(icons[type||"i"]||"●")+'</span><span>'+msg+'</span>';c.appendChild(t);requestAnimationFrame(()=>t.classList.add("show"));setTimeout(()=>{t.classList.remove("show");setTimeout(()=>t.remove(),400);},3200);}
+
+const alias=getAlias(),sid=getSid();
+document.getElementById("nalias").textContent=alias;
+document.getElementById("adisp").textContent=alias;
+
+// Theme
+const tbtn=document.getElementById("tbtn");
+tbtn.textContent=document.documentElement.getAttribute("data-theme")==="dark"?"🌙":"☀️";
+tbtn.addEventListener("click",()=>{const n=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",n);localStorage.setItem("ab_theme",n);tbtn.textContent=n==="dark"?"🌙":"☀️";});
+
+// Tag
+let selTag="Confession";
+document.querySelectorAll(".tpb").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".tpb").forEach(x=>x.className="tpb");b.classList.add("s"+b.dataset.key);selTag=b.dataset.tag;const isPoll=selTag==="Poll";document.getElementById("poll-builder").classList.toggle("show",isPoll);}));
+
+// Expiry
+let selH=0;
+document.querySelectorAll(".epb").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".epb").forEach(x=>x.classList.remove("on"));b.classList.add("on");selH=parseInt(b.dataset.h);}));
+
+// Char count
+const ta=document.getElementById("content"),cb=document.getElementById("cbar");
+ta.addEventListener("input",()=>{const l=ta.value.length;cb.textContent=l+" / 1000";cb.className="cbar"+(l>900?" d":l>700?" w":"");});
+
+// Poll builder
+function refreshDel(){const rows=document.getElementById("poll-opts").querySelectorAll(".por");rows.forEach(r=>{r.querySelector(".pdel").style.visibility=rows.length>2?"visible":"hidden";});}
+document.getElementById("padd").addEventListener("click",()=>{const opts=document.getElementById("poll-opts"),rows=opts.querySelectorAll(".por");if(rows.length>=4){toast("Maximum 4 options","e");return;}const row=document.createElement("div");row.className="por";row.innerHTML=`<input class="fi" type="text" placeholder="Option ${rows.length+1}" maxlength="80"/><button class="pdel">✕</button>`;opts.appendChild(row);refreshDel();});
+document.getElementById("poll-opts").addEventListener("click",e=>{if(e.target.classList.contains("pdel")){e.target.closest(".por").remove();refreshDel();}});
+
+// Cooldown
+const CD=60000;
+function cdRem(){const l=parseInt(localStorage.getItem("ab_last_post")||"0"),r=CD-(Date.now()-l);return r>0?r:0;}
+function cdUI(){const btn=document.getElementById("subbtn"),iv=setInterval(()=>{const r=cdRem();if(r<=0){clearInterval(iv);btn.disabled=false;btn.textContent="🕶️ Post Anonymously";}else{btn.disabled=true;btn.textContent="⏳ Wait "+Math.ceil(r/1000)+"s";}},500);}
+window.addEventListener("load",()=>{if(cdRem()>0)cdUI();});
+
+// Submit
+document.getElementById("subbtn").addEventListener("click",async()=>{
+  const content=ta.value.trim(),isPoll=selTag==="Poll";
+  if(!content){toast("Write something first!","e");return;}
+  if(isPoll){const opts=[...document.getElementById("poll-opts").querySelectorAll("input")].map(i=>i.value.trim()).filter(Boolean);if(opts.length<2){toast("Add at least 2 poll options","e");return;}}
+  const rem=cdRem();if(rem>0){toast("Wait "+Math.ceil(rem/1000)+"s before posting again","e");cdUI();return;}
+  const btn=document.getElementById("subbtn");btn.disabled=true;btn.textContent="Posting…";
+  try{
+    let pollOptions=null,pollVotedBy=null;
+    if(isPoll){const opts=[...document.getElementById("poll-opts").querySelectorAll("input")].map(i=>i.value.trim()).filter(Boolean);pollOptions=opts.map(text=>({text,votes:0}));pollVotedBy=[];}
+    await db.collection("posts").add({content,tag:selTag,alias,sessionId:sid,createdAt:Date.now(),expiresAt:selH>0?Date.now()+selH*3600000:null,upvotes:0,downvotes:0,score:0,commentCount:0,reports:0,upvotedBy:[],downvotedBy:[],...(pollOptions&&{pollOptions,pollVotedBy})});
+    localStorage.setItem("ab_last_post",Date.now().toString());
+    toast("Posted anonymously! 🕶️","s");
+    setTimeout(()=>window.location.href="../index.html",1400);
+  }catch(err){toast("Error: "+err.message,"e");btn.disabled=false;btn.textContent="🕶️ Post Anonymously";}
+});
+if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});
+</script>
+</body>
+</html>

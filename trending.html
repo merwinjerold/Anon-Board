@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trending — AnonBoard</title>
+  <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("ab_theme")||"dark");</script>
+  <link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+:root{--bg:#07080f;--glass:rgba(255,255,255,.045);--gb:rgba(255,255,255,.09);--pink:#f72585;--violet:#7209b7;--cyan:#4cc9f0;--green:#06ffa5;--orange:#ff6b35;--yellow:#ffd60a;--text:#f0f0ff;--dim:#8888aa;--muted:#44445a;--cbg:rgba(255,255,255,.045);--cbr:rgba(255,255,255,.09);--nav:rgba(7,8,15,.82);--r:18px;--rlg:24px;}
+[data-theme="light"]{--bg:#f0f2f8;--glass:rgba(255,255,255,.75);--gb:rgba(0,0,0,.1);--text:#0a0a1a;--dim:#555577;--muted:#9999bb;--cbg:rgba(255,255,255,.85);--cbr:rgba(0,0,0,.1);--nav:rgba(240,242,248,.88);}
+[data-theme="light"] .ab{opacity:.07!important;}[data-theme="light"] .toast{background:rgba(255,255,255,.95)!important;color:var(--text);}[data-theme="light"] .pb{color:rgba(10,10,26,.82);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background .25s,color .25s;}
+.aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+.ab{position:absolute;border-radius:50%;filter:blur(90px);opacity:.16;animation:drift 20s ease-in-out infinite alternate;}
+.ab:nth-child(1){width:700px;height:700px;background:var(--pink);top:-250px;left:-150px;animation-duration:22s;}
+.ab:nth-child(2){width:600px;height:600px;background:var(--cyan);top:50px;right:-200px;animation-duration:18s;animation-delay:-6s;}
+.ab:nth-child(3){width:500px;height:500px;background:var(--violet);bottom:0;left:25%;animation-duration:25s;animation-delay:-12s;}
+.ab:nth-child(4){width:350px;height:350px;background:var(--green);bottom:-100px;right:15%;animation-duration:15s;animation-delay:-4s;}
+@keyframes drift{0%{transform:translate(0,0)scale(1);}33%{transform:translate(40px,-30px)scale(1.06);}66%{transform:translate(-25px,35px)scale(.96);}100%{transform:translate(15px,15px)scale(1.04);}}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:1;}
+nav{position:sticky;top:0;z-index:200;height:66px;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;background:var(--nav);backdrop-filter:blur(28px)saturate(180%);border-bottom:1px solid var(--gb);transition:background .25s;}
+.logo{font-weight:800;font-size:1.3rem;text-decoration:none;background:linear-gradient(135deg,var(--pink),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nlinks{display:flex;gap:4px;}.nl{color:var(--dim);text-decoration:none;font-size:.875rem;font-weight:600;padding:7px 16px;border-radius:999px;transition:all .2s;border:1px solid transparent;}.nl:hover,.nl.on{color:var(--text);background:var(--glass);border-color:var(--gb);}
+.nav-r{display:flex;align-items:center;gap:8px;}.nalias{font-size:.76rem;font-weight:600;padding:5px 14px;border-radius:999px;background:var(--glass);border:1px solid var(--gb);color:var(--dim);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tbtn{background:var(--glass);border:1px solid var(--gb);color:var(--dim);width:36px;height:36px;border-radius:999px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}.tbtn:hover{color:var(--text);transform:scale(1.1);}
+.wrap{max-width:740px;margin:0 auto;padding:2.5rem 1.5rem 5rem;position:relative;z-index:10;}
+.hero{margin-bottom:2.5rem;}.hero h1{font-weight:800;font-size:2.1rem;letter-spacing:-.8px;line-height:1.15;margin-bottom:.3rem;}
+.gt{background:linear-gradient(135deg,var(--pink) 0%,var(--cyan) 55%,var(--green) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero p{color:var(--dim);font-size:.9rem;}
+.pc{display:block;text-decoration:none;color:inherit;background:var(--cbg);border:1px solid var(--cbr);border-radius:var(--rlg);padding:1.5rem;margin-bottom:1rem;backdrop-filter:blur(20px);transition:all .25s cubic-bezier(.34,1.56,.64,1);opacity:0;transform:translateY(16px);animation:cin .4s cubic-bezier(.34,1.56,.64,1) forwards;position:relative;overflow:hidden;}
+.pc::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 60%,rgba(255,255,255,.02));pointer-events:none;}
+.pc:hover{transform:translateY(-3px)scale(1.005);border-color:rgba(255,255,255,.18);box-shadow:0 20px 60px rgba(0,0,0,.4);}
+@keyframes cin{to{opacity:1;transform:translateY(0);}}
+.pc[data-tag="Confession"]{border-left:3px solid var(--pink);}
+.pc[data-tag="Question"]{border-left:3px solid var(--cyan);}
+.pc[data-tag="Opinion"]{border-left:3px solid var(--yellow);}
+.pc[data-tag="Rant"]{border-left:3px solid var(--orange);}
+.pc[data-tag="Meme"]{border-left:3px solid var(--green);}
+.pc[data-tag="Poll"]{border-left:3px solid var(--violet);}
+.ph{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:.85rem;}
+.ac{font-size:.76rem;font-weight:700;padding:3px 11px;border-radius:999px;background:rgba(247,37,133,.15);color:var(--pink);border:1px solid rgba(247,37,133,.25);}
+.tc{font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:999px;letter-spacing:.05em;text-transform:uppercase;}
+.tc.Confession{background:rgba(247,37,133,.12);color:var(--pink);border:1px solid rgba(247,37,133,.2);}
+.tc.Question{background:rgba(76,201,240,.12);color:var(--cyan);border:1px solid rgba(76,201,240,.2);}
+.tc.Opinion{background:rgba(255,214,10,.1);color:var(--yellow);border:1px solid rgba(255,214,10,.2);}
+.tc.Rant{background:rgba(255,107,53,.12);color:var(--orange);border:1px solid rgba(255,107,53,.2);}
+.tc.Meme{background:rgba(6,255,165,.1);color:var(--green);border:1px solid rgba(6,255,165,.2);}
+.tc.Poll{background:rgba(114,9,183,.15);color:#c77dff;border:1px solid rgba(114,9,183,.3);}
+.pt{margin-left:auto;font-size:.72rem;color:var(--muted);}
+.pb{font-size:.96rem;line-height:1.75;color:rgba(240,240,255,.88);margin-bottom:.75rem;word-break:break-word;}
+[data-theme="light"] .pb{color:rgba(10,10,26,.82);}
+.pb.clamped{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pf{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.vb{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:999px;border:1px solid var(--gb);background:var(--glass);color:var(--dim);font-size:.8rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;}.vb:hover{border-color:rgba(255,255,255,.2);color:var(--text);transform:scale(1.06);}
+.vb.up{background:rgba(6,255,165,.12);border-color:rgba(6,255,165,.4);color:var(--green);}
+.vb.dn{background:rgba(247,37,133,.1);border-color:rgba(247,37,133,.3);color:var(--pink);}
+.cpill{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:999px;border:1px solid var(--gb);background:var(--glass);color:var(--dim);font-size:.8rem;}
+.rbtn{margin-left:auto;background:none;border:none;color:var(--muted);font-size:.75rem;cursor:pointer;padding:4px 9px;border-radius:7px;transition:all .2s;font-family:inherit;}.rbtn:hover{color:var(--pink);background:rgba(247,37,133,.08);}
+.ldr{display:flex;align-items:center;justify-content:center;padding:5rem 2rem;}
+.spin{width:36px;height:36px;border:3px solid var(--gb);border-top-color:var(--pink);border-right-color:var(--cyan);border-radius:50%;animation:sp .8s linear infinite;}
+@keyframes sp{to{transform:rotate(360deg);}}
+.empty{text-align:center;padding:5rem 2rem;}.empty .ei{font-size:4rem;display:block;margin-bottom:1rem;}.empty h3{font-weight:700;font-size:1.1rem;color:var(--dim);margin-bottom:.3rem;}.empty p{color:var(--muted);font-size:.88rem;}
+.tcon{position:fixed;bottom:1.75rem;right:1.75rem;z-index:999;display:flex;flex-direction:column;gap:8px;pointer-events:none;}
+.toast{display:flex;align-items:center;gap:10px;padding:11px 17px;border-radius:12px;font-size:.875rem;font-weight:500;backdrop-filter:blur(20px);border:1px solid var(--gb);background:rgba(10,11,20,.9);color:var(--text);transform:translateX(130px);opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);pointer-events:all;}.toast.show{transform:translateX(0);opacity:1;}
+.ts{border-left:3px solid var(--green);}.te{border-left:3px solid var(--pink);}.ti{border-left:3px solid var(--cyan);}
+.ticon{font-size:.9rem;}.ts .ticon{color:var(--green);}.te .ticon{color:var(--pink);}.ti .ticon{color:var(--cyan);}
+@media(max-width:640px){nav{padding:0 1rem;}.nalias{display:none;}.wrap{padding:1.5rem 1rem 3rem;}.hero h1{font-size:1.6rem;}}
+  </style>
+</head>
+<body>
+<div class="aurora"><div class="ab"></div><div class="ab"></div><div class="ab"></div><div class="ab"></div></div>
+<nav>
+  <a class="logo" href="../index.html">🕶️ AnonBoard</a>
+  <div class="nlinks"><a class="nl" href="../index.html">Feed</a><a class="nl on" href="trending.html">🔥 Trending</a><a class="nl" href="create.html">✦ Post</a></div>
+  <div class="nav-r"><button class="tbtn" id="tbtn">🌙</button><span class="nalias" id="nalias">Loading…</span></div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <h1>🔥 <span class="gt">Trending</span></h1>
+    <p>The hottest posts right now — ranked by community votes.</p>
+  </div>
+  <div id="feed"><div class="ldr"><div class="spin"></div></div></div>
+</div>
+<div class="tcon" id="tc"></div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({apiKey:"AIzaSyAClamkJY1f7JB5Y0RlRe4rHT71a2T9kGA",authDomain:"anonymouswebsite.firebaseapp.com",projectId:"anonymouswebsite",storageBucket:"anonymouswebsite.firebasestorage.app",messagingSenderId:"114951669112",appId:"1:114951669112:web:a3891682821870e138f48d"});
+const db=firebase.firestore();
+const ADJ=["Silent","Mystic","Wandering","Hidden","Phantom","Shadow","Cosmic","Lunar","Electric","Frozen","Ancient","Neon","Crimson","Golden","Velvet","Blazing","Drifting","Spectral","Hollow","Radiant"];
+const ANI=["Panda 🐼","Fox 🦊","Wolf 🐺","Raven 🐦","Tiger 🐯","Owl 🦉","Phoenix 🔥","Dolphin 🐬","Jaguar 🐆","Hawk 🦅","Lynx 🐱","Kraken 🦑","Moth 🦋","Falcon 🦅","Cobra 🐍","Mantis 🦗","Bison 🦬","Mango 🥭","Viper 🐍","Coyote 🐺"];
+function getAlias(){let a=sessionStorage.getItem("ab_alias");if(!a){a=ADJ[Math.floor(Math.random()*ADJ.length)]+" "+ANI[Math.floor(Math.random()*ANI.length)];sessionStorage.setItem("ab_alias",a);}return a;}
+function getSid(){let s=sessionStorage.getItem("ab_sid");if(!s){s="s"+Math.random().toString(36).substr(2,10);sessionStorage.setItem("ab_sid",s);}return s;}
+function timeAgo(ts){if(!ts)return"just now";const d=Date.now()-ts,m=Math.floor(d/60000),h=Math.floor(d/3600000),dy=Math.floor(d/86400000);if(m<1)return"just now";if(m<60)return m+"m ago";if(h<24)return h+"h ago";return dy+"d ago";}
+function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g,"<br>");}
+function toast(msg,type){const c=document.getElementById("tc"),t=document.createElement("div"),icons={s:"✓",e:"✕",i:"●"};t.className="toast t"+(type||"i");t.innerHTML='<span class="ticon">'+(icons[type||"i"]||"●")+'</span><span>'+msg+'</span>';c.appendChild(t);requestAnimationFrame(()=>t.classList.add("show"));setTimeout(()=>{t.classList.remove("show");setTimeout(()=>t.remove(),400);},3200);}
+
+const alias=getAlias(),sid=getSid();
+document.getElementById("nalias").textContent=alias;
+
+// Theme
+const tbtn=document.getElementById("tbtn");
+tbtn.textContent=document.documentElement.getAttribute("data-theme")==="dark"?"🌙":"☀️";
+tbtn.addEventListener("click",()=>{const n=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",n);localStorage.setItem("ab_theme",n);tbtn.textContent=n==="dark"?"🌙":"☀️";});
+
+db.collection("posts").orderBy("score","desc").limit(30).onSnapshot(snap=>{
+  const posts=snap.docs.map(d=>({id:d.id,...d.data()})).filter(p=>(!p.expiresAt||p.expiresAt>Date.now())&&(p.reports||0)<5);
+  const feed=document.getElementById("feed");
+  if(!posts.length){feed.innerHTML='<div class="empty"><span class="ei">🌑</span><h3>Nothing trending yet</h3><p>Post and vote to see things trend!</p></div>';return;}
+  const rc=["var(--yellow)","#aaa","var(--orange)"];
+  feed.innerHTML=posts.map((p,i)=>{
+    const myUp=(p.upvotedBy||[]).includes(sid),myDown=(p.downvotedBy||[]).includes(sid);
+    const isLong=(p.content||"").length>280;
+    return`<a class="pc" href="post.html?id=${p.id}" data-tag="${p.tag||"General"}" style="animation-delay:${Math.min(i*.06,.5)}s">
+      <div class="ph"><span style="font-size:1rem;font-weight:800;color:${rc[i]||"var(--muted)"};min-width:24px">#${i+1}</span><span class="ac">${esc(p.alias)}</span><span class="tc ${p.tag||""}">${p.tag||"General"}</span><span class="pt">${timeAgo(p.createdAt)}</span></div>
+      <div class="pb ${isLong?"clamped":""}">${esc(p.content)}</div>
+      <div class="pf">
+        <button class="vb ${myUp?"up":""}" data-id="${p.id}" data-vote="up">▲ ${p.upvotes||0}</button>
+        <button class="vb ${myDown?"dn":""}" data-id="${p.id}" data-vote="down">▼ ${p.downvotes||0}</button>
+        <span class="cpill">💬 ${p.commentCount||0}</span>
+        <span class="cpill" style="color:var(--yellow)">⚡ ${p.score||0}</span>
+        <button class="rbtn" data-id="${p.id}" data-rep="1">⚑</button>
+      </div>
+    </a>`;
+  }).join("");
+});
+
+document.getElementById("feed").addEventListener("click",async e=>{
+  const vBtn=e.target.closest("[data-vote]"),rBtn=e.target.closest("[data-rep]");
+  if(!vBtn&&!rBtn)return;e.preventDefault();e.stopPropagation();
+  if(rBtn){if(!confirm("Report this post?"))return;await db.collection("posts").doc(rBtn.dataset.id).update({reports:firebase.firestore.FieldValue.increment(1)});toast("Reported!","s");return;}
+  const id=vBtn.dataset.id,type=vBtn.dataset.vote,ref=db.collection("posts").doc(id),snap=await ref.get();if(!snap.exists)return;
+  const data=snap.data(),upBy=data.upvotedBy||[],downBy=data.downvotedBy||[],FV=firebase.firestore.FieldValue;
+  if(type==="up"){if(upBy.includes(sid))await ref.update({upvotes:FV.increment(-1),upvotedBy:FV.arrayRemove(sid),score:FV.increment(-1)});else{const wd=downBy.includes(sid);await ref.update({upvotes:FV.increment(1),upvotedBy:FV.arrayUnion(sid),...(wd&&{downvotes:FV.increment(-1),downvotedBy:FV.arrayRemove(sid)}),score:FV.increment(wd?2:1)});}}
+  else{if(downBy.includes(sid))await ref.update({downvotes:FV.increment(-1),downvotedBy:FV.arrayRemove(sid),score:FV.increment(1)});else{const wu=upBy.includes(sid);await ref.update({downvotes:FV.increment(1),downvotedBy:FV.arrayUnion(sid),...(wu&&{upvotes:FV.increment(-1),upvotedBy:FV.arrayRemove(sid)}),score:FV.increment(wu?-2:-1)});}}
+});
+if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});
+</script>
+</body>
+</html>
